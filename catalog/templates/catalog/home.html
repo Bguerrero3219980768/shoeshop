@@ -1,0 +1,51 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>shoeshop-tangoshoes</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <header class="header">
+    <img src="{% static 'img/logo.png' %}" alt="Logo" class="logo">
+    <h1 class="brand">shoeshop-tangoshoes</h1>
+    <p class="welcome">Bienvenid@</p>
+  </header>
+
+  <main class="container">
+    <h2 class="section-title">CATALOGO 🌈</h2>
+    <nav class="grid-buttons">
+      {% for r in refs %}
+        <a class="ref-button" href="{% url 'reference_detail' r.slug %}">
+          {{ r.name }}
+        </a>
+      {% empty %}
+        <p>No hay referencias aún.</p>
+      {% endfor %}
+    </nav>
+  </main>
+
+  <!-- Botones flotantes -->
+<div class="floating-buttons">
+  <a href="https://wa.me/573202952041" 
+     class="float-btn whatsapp" 
+     target="_blank"
+     aria-label="WhatsApp">
+    <img src="/static/img/whatsapp.svg" alt="WhatsApp">
+  </a>
+
+  <a href="https://www.instagram.com/tangoshoes_cucuta?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
+     class="float-btn instagram" 
+     target="_blank"
+     aria-label="Instagram">
+    <img src="/static/img/instagram.svg" alt="Instagram">
+  </a>
+</div>
+
+<footer class="footer"> <p>© 2026 shoeshop-tangoshoes. Todos los derechos reservados.
+</p> </footer>
+
+</body>
+</html>

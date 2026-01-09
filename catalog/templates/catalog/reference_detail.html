@@ -1,0 +1,73 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ ref.name }} — shoeshop</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <header class="header">
+    <a class="back" href="/">← Catálogo</a>
+    <h1 class="brand">{{ ref.name }}</h1>
+    {% if ref.description %}
+      <p class="desc">{{ ref.description }}</p>
+    {% endif %}
+  </header>
+
+  <main class="container">
+    <section class="photo-grid">
+      {% for p in photos %}
+        <figure class="photo-card">
+          <img src="{{ p.image.url }}" 
+               alt="{{ p.alt_text|default:ref.name }}"
+               class="zoomable"
+               data-full="{{ p.image.url }}">
+        </figure>
+      {% empty %}
+        <p>No hay fotos para esta referencia.</p>
+      {% endfor %}
+    </section>
+  </main>
+
+  <!-- Botones flotantes -->
+  <div class="floating-buttons">
+    <a href="https://wa.me/573202952041?text=Hola,%20me%20interesa%20la%20referencia%20{{ ref.name|urlencode }}" 
+       class="float-btn whatsapp" 
+       target="_blank"
+       aria-label="WhatsApp">
+      <img src="{% static 'img/whatsapp.svg' %}" alt="WhatsApp">
+    </a>
+
+    <a href="https://www.instagram.com/tangoshoes_cucuta?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
+       class="float-btn instagram" 
+       target="_blank"
+       aria-label="Instagram">
+      <img src="{% static 'img/instagram.svg' %}" alt="Instagram">
+    </a>
+  </div>
+
+  <!-- Modal imagen ampliada -->
+  <div class="image-modal" id="imageModal">
+    <img src="" alt="Imagen ampliada">
+  </div>
+
+  <script>
+    const modal = document.getElementById('imageModal');
+    const modalImg = modal.querySelector('img');
+
+    document.querySelectorAll('.zoomable').forEach(img => {
+      img.addEventListener('click', () => {
+        modalImg.src = img.dataset.full;
+        modal.style.display = 'flex';
+      });
+    });
+
+    modal.addEventListener('click', () => {
+      modal.style.display = 'none';
+      modalImg.src = '';
+    });
+  </script>
+</body>
+</html>
